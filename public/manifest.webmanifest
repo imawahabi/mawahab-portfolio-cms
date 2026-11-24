@@ -1,0 +1,14 @@
+{
+  "name": "Abu Rakan",
+  "short_name": "Abu Rakan",
+  "description": "Portfolio and services for Abu Rakan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "64x64", "type": "image/x-icon" }
+  ]
+}

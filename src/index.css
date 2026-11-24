@@ -1,0 +1,310 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark Blue Theme */
+    --background: 220 40% 6%;
+    --foreground: 210 100% 98%;
+
+    --card: 220 35% 10%;
+    --card-foreground: 210 100% 98%;
+
+    --popover: 220 35% 10%;
+    --popover-foreground: 210 100% 98%;
+
+    --primary: 195 100% 50%;
+    --primary-foreground: 220 40% 6%;
+
+    --secondary: 217 40% 15%;
+    --secondary-foreground: 210 100% 98%;
+
+    --muted: 217 35% 20%;
+    --muted-foreground: 210 20% 70%;
+
+    --accent: 195 100% 60%;
+    --accent-foreground: 220 40% 6%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 40% 20%;
+    --input: 217 40% 20%;
+    --ring: 195 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors */
+    --neon-blue: 195 100% 50%;
+    --neon-blue-glow: 195 100% 70%;
+    --dark-navy: 220 40% 8%;
+    --card-border: 195 100% 50%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(195, 100%, 55%), hsl(195, 100%, 70%));
+    --gradient-card: linear-gradient(180deg, hsl(220, 35%, 12%), hsl(220, 35%, 8%));
+
+    /* Shadows */
+    --shadow-neon: 0 0 20px hsl(195 100% 50% / 0.3);
+    --shadow-card: 0 4px 20px hsl(195 100% 50% / 0.1);
+
+    --sidebar-background: 220 35% 10%;
+    --sidebar-foreground: 210 100% 98%;
+    --sidebar-primary: 195 100% 50%;
+    --sidebar-primary-foreground: 220 40% 6%;
+    --sidebar-accent: 217 40% 15%;
+    --sidebar-accent-foreground: 210 100% 98%;
+    --sidebar-border: 217 40% 20%;
+    --sidebar-ring: 195 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    @apply overflow-x-hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Cairo', sans-serif;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(circle at 20% 30%, hsl(195 100% 55% / 0.12) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, hsl(195 100% 50% / 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, hsl(220 40% 25% / 0.2) 0%, transparent 55%);
+    background-attachment: fixed;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, hsl(195 100% 65% / 0.11) 0, transparent 1px, transparent 60px),
+      repeating-linear-gradient(90deg, hsl(195 100% 65% / 0.11) 0, transparent 1px, transparent 60px),
+      linear-gradient(135deg, hsl(195 100% 60% / 0.07), hsl(195 100% 50% / 0.025));
+    background-size: 120px 120px, 120px 120px, 200% 200%;
+    mix-blend-mode: screen;
+    opacity: 0.40;
+    animation: grid-shimmer 18s linear infinite;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+
+  /* RTL Support for Select Components */
+  [dir="rtl"] .select-trigger {
+    text-align: right;
+  }
+
+  [dir="rtl"] .select-content {
+    text-align: right;
+  }
+
+  [dir="rtl"] .select-item {
+    text-align: right;
+  }
+}
+
+@layer utilities {
+  /* Background used on service pricing cards. Replaces invalid Tailwind arbitrary bg-[radial-gradient(...)] usage. */
+  .bg-services-radial {
+    background-image: radial-gradient(circle at 20% 20%, hsl(var(--primary) / 0.3) 0%, transparent 35%), radial-gradient(circle at 80% 0%, hsl(var(--secondary) / 0.25) 0%, transparent 30%);
+  }
+
+  /* Glow effects */
+  .glow-border {
+    border: 1px solid hsl(var(--card-border) / 0.3);
+    box-shadow: 0 0 20px hsl(var(--neon-blue) / 0.15);
+  }
+
+  .glow-hover {
+    transition: all 0.3s ease;
+  }
+
+  .glow-hover:hover {
+    border-color: hsl(var(--primary) / 0.6);
+    box-shadow: 0 0 30px hsl(var(--neon-blue) / 0.3);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Neon button */
+  .neon-button {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  .neon-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  .neon-button:hover::before {
+    left: 100%;
+  }
+}
+
+@layer utilities {
+  /* Hero section specific styles */
+  .hero-gradient-bg {
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--card)) 100%);
+  }
+
+  .profile-glow {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.2), 0 0 60px hsl(var(--primary) / 0.1);
+    border: 3px solid hsl(var(--primary) / 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .profile-glow:hover {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.3), 0 0 80px hsl(var(--primary) / 0.2);
+    border: 3px solid hsl(var(--primary) / 0.5);
+    transform: scale(1.02);
+  }
+
+  /* Skills section enhancements */
+  .skill-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .skill-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 10px 30px hsl(var(--primary) / 0.15);
+  }
+
+  .skill-icon-container {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.2));
+    transition: all 0.3s ease;
+  }
+
+  .skill-card:hover .skill-icon-container {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.3));
+    transform: scale(1.1);
+  }
+
+  /* Progress bar for skills */
+  .skill-progress {
+    height: 4px;
+    background: hsl(var(--border));
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  /* Enhanced button styles */
+  .enhanced-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .enhanced-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .enhanced-button:hover::after {
+    opacity: 1;
+  }
+
+  .enhanced-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px hsl(var(--primary) / 0.2);
+  }
+}
+
+@layer utilities {
+  @keyframes grid-shimmer {
+    0% {
+      background-position: 0 0, 0 0, 0% 0%;
+    }
+    50% {
+      background-position: 0 0, 0 0, 100% 100%;
+    }
+    100% {
+      background-position: 0 0, 0 0, 0% 0%;
+    }
+  }
+
+  .category-dot {
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.35), 0 0 24px hsl(var(--primary) / 0.2);
+    animation: category-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes category-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 0.7;
+    }
+  }
+}
